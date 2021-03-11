@@ -57,13 +57,13 @@ class GrindingExecution:
     def bank_dust(region_to_act):
 
         # find banker
-        posBanker = pyautogui.locateOnScreen('banker.png', confidence=0.7)
+        posBanker = pyautogui.locateOnScreen('banker.png', region=region_to_act, confidence=0.7)
 
         if posBanker is None:
-            posBanker = pyautogui.locateOnScreen('window_banker.png', confidence=0.6)
+            posBanker = pyautogui.locateOnScreen('window_banker.png', region=region_to_act, confidence=0.6)
 
             if posBanker is None:
-                posBanker = pyautogui.locateOnScreen('body_bench.png', confidence=0.6)
+                posBanker = pyautogui.locateOnScreen('body_bench.png', region=region_to_act, confidence=0.6)
 
         posBankerCenter = pyautogui.center(posBanker)
 
@@ -78,7 +78,7 @@ class GrindingExecution:
         pyautogui.click(posBankerCenter)
 
         # Withdraw fresh horns after depositing dust
-        hornDustPos = pyautogui.locateOnScreen('hornDust.png', confidence=0.9)
+        hornDustPos = pyautogui.locateOnScreen('hornDust.png', region=region_to_act, confidence=0.9)
         hornDustPosCenter = pyautogui.center(hornDustPos)
 
         # make position into list
