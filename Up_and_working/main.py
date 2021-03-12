@@ -95,86 +95,19 @@ while True:
     print(breaker_condition)
 
 for i in saved_client_regions:
-    print(i)
-    inventory = pyautogui.locateOnScreen('inventory_red.png', region=i, confidence=0.95)
-    if inventory is None:
-        inventory = pyautogui.locateOnScreen('inventory_grey.png', region=i, confidence=0.95)
 
-    inventory_center = pyautogui.center(inventory)
-    inventory_list = list(inventory_center)
-
-    inventory_list[0] += random.randint(-5, 5)
-    inventory_list[1] += random.randint(-5, 5)
-
-    inventory_center = tuple(inventory_list)
-
-    pyautogui.moveTo(inventory_center, duration=random.randint(10, 30) / 100)
-    pyautogui.click()
-
-    compass = pyautogui.locateOnScreen('compass.png', confidence=0.93)
-    if compass is None:
-        compass = pyautogui.locateOnScreen('compass2.png', confidence=0.9)
-
-    compass_center = pyautogui.center(compass)
-    compass_center_list = list(compass_center)
-
-    compass_center_list[0] += random.randint(-4, 4)
-    compass_center_list[1] += random.randint(-4, 4)
-
-    compass_center = tuple(compass_center_list)
-
-    pyautogui.moveTo(compass_center, duration=random.randint(10, 20) / 100)
-    pyautogui.click()
-
-    pyautogui.keyDown('down')
-    time.sleep(2)
-    pyautogui.keyUp('down')
-
-    while True:
-        pyautogui.keyDown('left')
-        time.sleep(random.randint(25, 95) / 1000)
-        pyautogui.keyUp('left')
-        if pyautogui.locateOnScreen('banker.png', region=i, confidence=0.82) is None:
-            pass
-        else:
-            break
-        if pyautogui.locateOnScreen('banker1.png', region=i, confidence=0.82) is None:
-            pass
-        else:
-            break
-        if pyautogui.locateOnScreen('banker2.png', region=i, confidence=0.82) is None:
-            pass
-        else:
-            break
-        if pyautogui.locateOnScreen('banker3.png', region=i, confidence=0.82) is None:
-            pass
-        else:
-            break
-        if pyautogui.locateOnScreen('banker4.png', region=i, confidence=0.82) is None:
-            pass
-        else:
-            break
-        if pyautogui.locateOnScreen('banker5.png', region=i, confidence=0.82) is None:
-            pass
-        else:
-            break
-        if pyautogui.locateOnScreen('banker6.png', region=i, confidence=0.82) is None:
-            pass
-        else:
-            break
-        if pyautogui.locateOnScreen('window_banker.png', region=i, confidence=0.82) is None:
-            pass
-        else:
-            break
-        if pyautogui.locateOnScreen('body_bench.png', region=i, confidence=0.82) is None:
-            continue
-        else:
-            break
-
+    bot.set_up_view(region_to_act=i)
+    bot.is_no_horns(region_to_act=i)
     bot.click_goat_horn(region_to_act=i)
     bot.grind_goat_horn(region_to_act=i)
 
-time.sleep(random.randint(4000, 4500) / 100)
+while True:
+    is_horn_in_first_client = pyautogui.locateOnScreen('Horn.png', region=saved_client_regions[0], confidence=0.85)
+    if is_horn_in_first_client is None:
+        time.sleep(random.randint(10, 30) / 10)
+        break
+
+logout_counter = 140
 while True:
 
     for i in saved_client_regions:
@@ -182,4 +115,13 @@ while True:
         bot.withdraw_horns(region_to_act=i)
         bot.click_goat_horn(region_to_act=i)
         bot.grind_goat_horn(region_to_act=i)
-    time.sleep(random.randint(1600, 2500) / 100)
+
+
+    logout_counter += 1
+
+    if logout_counter > random.randint(90, 130):
+        for i in saved_client_regions:
+            bot.log_out(i)
+        time.sleep(random.randint(10, 20))
+        Acc2.counter = 0
+        Acc2.execute_logins()

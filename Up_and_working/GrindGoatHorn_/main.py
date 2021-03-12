@@ -65,6 +65,22 @@ class GrindingExecution:
             if posBanker is None:
                 posBanker = pyautogui.locateOnScreen('body_bench.png', region=region_to_act, confidence=0.6)
 
+                if posBanker is None:
+                    posBanker = pyautogui.locateOnScreen('banker1.png', region=region_to_act, confidence=0.6)
+
+                    if posBanker is None:
+                        posBanker = pyautogui.locateOnScreen('banker2.png', region=region_to_act, confidence=0.6)
+
+                        if posBanker is None:
+                            posBanker = pyautogui.locateOnScreen('banker3.png', region=region_to_act, confidence=0.6)
+
+                            if posBanker is None:
+                                posBanker = pyautogui.locateOnScreen('banker4.png', region=region_to_act,
+                                                                     confidence=0.6)
+                                if posBanker is None:
+                                    posBanker = pyautogui.locateOnScreen('banker5.png', region=region_to_act,
+                                                                         confidence=0.6)
+
         posBankerCenter = pyautogui.center(posBanker)
 
         # make pos list
@@ -131,19 +147,19 @@ class GrindingExecution:
     def withdraw_horns(region_to_act):
 
         # find banked hornstack
-        hornPos = pyautogui.locateOnScreen('banked_horn.png', region=region_to_act, confidence=0.6)
+        hornPos = pyautogui.locateOnScreen('banked_horn.png', region=region_to_act, confidence=0.75)
 
         if hornPos is None:
-            hornPos = pyautogui.locateOnScreen('banked_horn_semi_full.png', region=region_to_act, confidence=0.6)
+            hornPos = pyautogui.locateOnScreen('banked_horn_semi_full.png', region=region_to_act, confidence=0.75)
 
             if hornPos is None:
-                hornPos = pyautogui.locateOnScreen('banked_horn_full.png', region=region_to_act, confidence=0.6)
+                hornPos = pyautogui.locateOnScreen('banked_horn_full.png', region=region_to_act, confidence=0.75)
 
                 if hornPos is None:
-                    hornPos = pyautogui.locateOnScreen('k_stack.png', region=region_to_act, confidence=0.6)
+                    hornPos = pyautogui.locateOnScreen('k_stack.png', region=region_to_act, confidence=0.75)
 
                     if hornPos is None:
-                        hornPos = pyautogui.locateOnScreen('bottom_of_stack.png', region=region_to_act, confidence=0.6)
+                        hornPos = pyautogui.locateOnScreen('bottom_of_stack.png', region=region_to_act, confidence=0.7)
 
         hornPosCenter = pyautogui.center(hornPos)
 
@@ -162,7 +178,7 @@ class GrindingExecution:
         time.sleep(GrindingExecution.random_time(16, 100))
 
         # Locate "withdraw all" and click
-        withdrawAllPos = pyautogui.locateOnScreen('withdraw_all.png', region=region_to_act, confidence=0.75)
+        withdrawAllPos = pyautogui.locateOnScreen('withdraw_all.png', region=region_to_act, confidence=0.7)
         withdrawAllCenter = pyautogui.center(withdrawAllPos)
 
         pyautogui.moveTo(withdrawAllCenter, duration=GrindingExecution.random_time(8, 40))
@@ -186,3 +202,118 @@ class GrindingExecution:
         # Move to exit and click
         pyautogui.moveTo(exitButtonPosCenter, duration=GrindingExecution.random_time(30, 45))
         pyautogui.click()
+
+    @staticmethod
+    def log_out(region_to_act):
+        # Logout icon
+        log_out_button = pyautogui.locateOnScreen('log_out.png', region=region_to_act, confidence=0.9)
+        log_out_button_center = pyautogui.center(log_out_button)
+        log_out_button_center_list = list(log_out_button_center)
+
+        log_out_button_center_list[0] += random.randint(-3, 3)
+        log_out_button_center_list[1] += random.randint(-4, 4)
+
+        log_out_button_center = tuple(log_out_button_center_list)
+
+        pyautogui.moveTo(log_out_button_center, duration=random.randint(40, 100)/100)
+        pyautogui.click()
+
+        # Red Logout button
+        log_out_red = pyautogui.locateOnScreen('log_out_red.png', region=region_to_act, confidence=0.9)
+        log_out_red_center = pyautogui.center(log_out_red)
+
+        log_out_red_center_list = list(log_out_red_center)
+
+        log_out_red_center_list[0] += random.randint(-14, 14)
+        log_out_red_center_list[1] += random.randint(-5, 5)
+
+        log_out_red_center = tuple(log_out_red_center_list)
+
+        pyautogui.moveTo(log_out_red_center, duration= random.randint(20, 50)/100)
+        pyautogui.click()
+
+    @staticmethod
+    def set_up_view(region_to_act):
+
+        inventory = pyautogui.locateOnScreen('inventory_red.png', region=region_to_act, confidence=0.95)
+        if inventory is None:
+            inventory = pyautogui.locateOnScreen('inventory_grey.png', region=region_to_act, confidence=0.95)
+
+        inventory_center = pyautogui.center(inventory)
+        inventory_list = list(inventory_center)
+
+        inventory_list[0] += random.randint(-5, 5)
+        inventory_list[1] += random.randint(-5, 5)
+
+        inventory_center = tuple(inventory_list)
+
+        pyautogui.moveTo(inventory_center, duration=random.randint(10, 30) / 100)
+        pyautogui.click()
+
+        compass = pyautogui.locateOnScreen('compass.png', confidence=0.93)
+        if compass is None:
+            compass = pyautogui.locateOnScreen('compass2.png', confidence=0.9)
+
+        compass_center = pyautogui.center(compass)
+        compass_center_list = list(compass_center)
+
+        compass_center_list[0] += random.randint(-4, 4)
+        compass_center_list[1] += random.randint(-4, 4)
+
+        compass_center = tuple(compass_center_list)
+
+        pyautogui.moveTo(compass_center, duration=random.randint(10, 20) / 100)
+        pyautogui.click()
+
+        pyautogui.keyDown('down')
+        time.sleep(2)
+        pyautogui.keyUp('down')
+
+        while True:
+            pyautogui.keyDown('left')
+            time.sleep(random.randint(25, 95) / 1000)
+            pyautogui.keyUp('left')
+            if pyautogui.locateOnScreen('banker.png', region=region_to_act, confidence=0.82) is None:
+                pass
+            else:
+                break
+            if pyautogui.locateOnScreen('banker1.png', region=region_to_act, confidence=0.82) is None:
+                pass
+            else:
+                break
+            if pyautogui.locateOnScreen('banker2.png', region=region_to_act, confidence=0.82) is None:
+                pass
+            else:
+                break
+            if pyautogui.locateOnScreen('banker3.png', region=region_to_act, confidence=0.82) is None:
+                pass
+            else:
+                break
+            if pyautogui.locateOnScreen('banker4.png', region=region_to_act, confidence=0.82) is None:
+                pass
+            else:
+                break
+            if pyautogui.locateOnScreen('banker5.png', region=region_to_act, confidence=0.82) is None:
+                pass
+            else:
+                break
+            if pyautogui.locateOnScreen('banker6.png', region=region_to_act, confidence=0.82) is None:
+                pass
+            else:
+                break
+            if pyautogui.locateOnScreen('window_banker.png', region=region_to_act, confidence=0.82) is None:
+                pass
+            else:
+                break
+            if pyautogui.locateOnScreen('body_bench.png', region=region_to_act, confidence=0.82) is None:
+                continue
+            else:
+                break
+
+    @staticmethod
+    def is_no_horns(region_to_act):
+        horn = pyautogui.locateOnScreen('Horn.png', region=region_to_act, confidence=0.9)
+        if horn is None:
+            GrindingExecution.bank_dust(region_to_act=region_to_act)
+            GrindingExecution.withdraw_horns(region_to_act=region_to_act)
+
